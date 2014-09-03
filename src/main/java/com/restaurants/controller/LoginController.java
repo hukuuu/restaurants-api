@@ -21,7 +21,7 @@ public class LoginController {
 	public Response ping(@Valid Account account) {
 		Account acc = accountService.findOneByProperty("username", account.getUsername());
 		if(acc != null) {
-			String hashed = accountService.hashPassword(account.getPassword());
+			String hashed = accountService.hash(account.getPassword());
 			if(acc.getPassword().equals(hashed)){
 				return Response.ok().build();
 			}

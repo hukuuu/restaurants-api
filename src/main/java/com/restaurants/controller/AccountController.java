@@ -7,8 +7,10 @@ import com.restaurants.entity.Account;
 import com.restaurants.entity.BaseEntity;
 import com.restaurants.service.AccountService;
 import com.restaurants.service.CRUDService;
+import com.restaurants.utils.Authenticated;
 
-@Path("/secure/accounts")
+@Path("/accounts")
+@Authenticated
 public class AccountController extends CRUDController<Account> {
 	
 	@Inject

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -42,6 +43,13 @@ public abstract class CRUDController<K extends BaseEntity> {
 		if(find == null)
 			return Response.status(Status.NOT_FOUND).build();
 		return Response.ok(find).build();
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	public Response delete(@PathParam("id") Long id) {
+		getService().delete(id);
+		return Response.ok().build();
 	}
 	
 	@POST

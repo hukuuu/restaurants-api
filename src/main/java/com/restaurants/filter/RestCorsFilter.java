@@ -18,10 +18,9 @@ public class RestCorsFilter implements ContainerResponseFilter {
 		MultivaluedMap<String, String> reqHeaders = requestCtx.getHeaders();
 		List<String> oh = reqHeaders.get("Origin");
 		String origin = "*";
-		if(oh != null && oh.size() > 0) {
+		if (oh != null && oh.size() > 0) {
 			origin = oh.get(0);
 		}
-
 
 		responseCtx.getHeaders().add("Access-Control-Allow-Credentials", true);
 		responseCtx.getHeaders().add("Access-Control-Allow-Origin", origin);

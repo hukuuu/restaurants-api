@@ -2,7 +2,6 @@ package com.restaurants.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +9,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")

@@ -1,18 +1,20 @@
 package com.restaurants.entity;
 
 import java.util.List;
-
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
-
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.restaurants.enums.Role;
 
 @SuppressWarnings("serial")
 @Entity
+@Where(clause="DELETED != 'TRUE'")
+@SQLDelete(sql = "UPDATE Account SET DELETED = 'TRUE' WHERE id=?")
 public class Account extends BaseEntity {
 
 	private String username;

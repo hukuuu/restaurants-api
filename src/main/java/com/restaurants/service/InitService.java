@@ -1,7 +1,7 @@
 package com.restaurants.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,8 +10,8 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import com.restaurants.entity.Account;
+import com.restaurants.entity.Food;
 import com.restaurants.entity.Restaurant;
-import com.restaurants.enums.Role;
 
 @Singleton
 @Startup
@@ -22,20 +22,74 @@ public class InitService {
 
 	@Inject
 	private RestaurantService restaurantService;
+	
+	@Inject
+	private FoodService foodService;
 
 	@PostConstruct
 	public void init() {
 		if (isSafeToAdd()) {
 			initAccounts();
 			initRestaurants();
+			initFood();
 		}
 	}
+
 
 	private boolean isSafeToAdd() {
 		List<Account> all = accountService.findAll();
 		if(all != null && all.size() > 0)
 			return false;
 		return true;
+	}
+
+	private void initFood() {
+		List<Restaurant> restaurants = restaurantService.findAll();
+		for (Restaurant restaurant : restaurants) {
+			Food soup;
+
+			soup = new Food();
+			soup.setCategory("soup");
+			soup.setDescription("amet laborum minim proident incididunt consectetur qui magna laboris sunt proident consectetur incididunt sint sunt ex laborum cupidatat aliquip id consectetur magna aliqua exercitation commodo nisi duis consectetur");
+			soup.setPicture("/cream-soup.jpg");
+			soup.setPrice(new BigDecimal("2.00"));
+			soup.setServing("cup");
+			soup.setRestaurant(restaurant);
+			soup.setTitle("Cream Soup");
+			foodService.save(soup);
+			
+			soup = new Food();
+			soup.setCategory("soup");
+			soup.setDescription("enim aliquip adipisicing duis qui Lorem eiusmod ex tempor cillum qui nisi ad cillum dolor aliqua veniam enim voluptate consectetur nostrud aute pariatur exercitation eu cupidatat culpa Lorem");
+			soup.setPicture("/borshch-soup.jpg");
+			soup.setPrice(new BigDecimal("4.99"));
+			soup.setServing("cup");
+			soup.setRestaurant(restaurant);
+			soup.setTitle("Borshch");
+			foodService.save(soup);
+			
+			soup = new Food();
+			soup.setCategory("soup");
+			soup.setDescription("duis consequat incididunt consectetur culpa officia duis irure exercitation incididunt et dolor dolore exercitation veniam et incididunt eiusmod voluptate in ad ea aliqua nostrud ea quis aliqua elit");
+			soup.setPicture("/chicken-soup.jpg");
+			soup.setPrice(new BigDecimal("3.50"));
+			soup.setServing("cup");
+			soup.setRestaurant(restaurant);
+			soup.setTitle("Chicken Soup");
+			foodService.save(soup);
+			
+			
+			soup = new Food();
+			soup.setCategory("soup");
+			soup.setDescription("consectetur consequat consectetur incididunt non nulla minim ipsum adipisicing consectetur est adipisicing et laboris anim dolor adipisicing fugiat aute et do do et nisi excepteur esse pariatur duis");
+			soup.setPicture("/tarator-soup.jpg");
+			soup.setPrice(new BigDecimal("1.50"));
+			soup.setServing("cup");
+			soup.setRestaurant(restaurant);
+			soup.setTitle("Tarator");
+			foodService.save(soup);
+		}
+		
 	}
 
 	private void initRestaurants() {

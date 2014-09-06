@@ -1,23 +1,25 @@
 package com.restaurants.entity;
 
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")
 @Entity
+@Where(clause="DELETED != 'TRUE'")
+@SQLDelete(sql = "UPDATE Restaurant SET DELETED = 'TRUE' WHERE id=?")
 public class Restaurant extends BaseEntity {
 
 	@JsonIgnore
 	@ManyToOne
 	private Account account;
 	private String name;
-	@OneToMany(mappedBy="restaurant")
 	@JsonIgnore
+	@OneToMany(mappedBy="restaurant")
 	private List<Food> foods;
 	private String openHours;
 	private String phone;

@@ -481,6 +481,18 @@
                         <policy-module code="Delegating" flag="required"/>
                     </authorization>
                 </security-domain>
+				<security-domain name="RESTAURANTS_JAAS">
+                    <authentication>
+                        <login-module code="Database" flag="required">
+                            <module-option name="dsJndiName" value="java:jboss/datasources/PostgreSQLDS"/>
+                            <module-option name="principalsQuery" value="select password from account where username=?"/>
+                            <module-option name="rolesQuery" value="SELECT account_roles.roles, 'Roles' FROM account INNER JOIN account_roles ON account.id = account_roles.account_id WHERE account.username=?"/>
+                            <module-option name="hashAlgorithm" value="SHA"/>
+                            <module-option name="hashEncoding" value="base64"/>
+                            <module-option name="unauthenticatedIdentity" value="guest"/>
+                        </login-module>
+                    </authentication>
+                </security-domain>
             </security-domains>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:transactions:2.0">

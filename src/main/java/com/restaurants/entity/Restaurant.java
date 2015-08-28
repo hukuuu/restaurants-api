@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")
 @Entity
-@Where(clause="DELETED != 'TRUE'")
+@Where(clause = "DELETED != 'TRUE'")
 @SQLDelete(sql = "UPDATE Restaurant SET DELETED = 'TRUE' WHERE id=?")
 public class Restaurant extends BaseEntity {
 
@@ -19,8 +19,11 @@ public class Restaurant extends BaseEntity {
 	private Account account;
 	private String name;
 	@JsonIgnore
-	@OneToMany(mappedBy="restaurant")
+	@OneToMany(mappedBy = "restaurant")
 	private List<Food> foods;
+	@JsonIgnore
+	@OneToMany(mappedBy = "restaurant")
+	private List<OrderRequest> orderRequests;
 	private String openHours;
 	private String phone;
 	private String address;
@@ -28,6 +31,14 @@ public class Restaurant extends BaseEntity {
 
 	public Account getAccount() {
 		return account;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getCategory() {
+		return category;
 	}
 
 	public List<Food> getFoods() {
@@ -38,8 +49,28 @@ public class Restaurant extends BaseEntity {
 		return name;
 	}
 
+	public String getOpenHours() {
+		return openHours;
+	}
+
+	public List<OrderRequest> getOrderRequests() {
+		return orderRequests;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public void setFoods(List<Food> foods) {
@@ -50,36 +81,16 @@ public class Restaurant extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getOpenHours() {
-		return openHours;
-	}
-
 	public void setOpenHours(String openHours) {
 		this.openHours = openHours;
 	}
 
-	public String getPhone() {
-		return phone;
+	public void setOrderRequests(List<OrderRequest> orderRequests) {
+		this.orderRequests = orderRequests;
 	}
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
 	}
 
 }

@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -16,9 +17,11 @@ import javax.ws.rs.core.SecurityContext;
 
 import com.restaurants.entity.Account;
 import com.restaurants.entity.BaseEntity;
+import com.restaurants.entity.OrderRequest;
 import com.restaurants.entity.Restaurant;
 import com.restaurants.service.AccountService;
 import com.restaurants.service.CRUDService;
+import com.restaurants.service.OrderRequestService;
 import com.restaurants.service.RestaurantService;
 import com.restaurants.service.UtilsService;
 import com.restaurants.utils.Authenticated;
@@ -38,6 +41,9 @@ public class RestaurantController extends CRUDController<Restaurant>{
 	
 	@Inject
 	private UtilsService utilsService;
+	
+	@Inject
+	private OrderRequestService orderRequestService;
 
 	@Override
 	public CRUDService<? extends BaseEntity> getService() {
@@ -64,6 +70,19 @@ public class RestaurantController extends CRUDController<Restaurant>{
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		return Response.ok().entity(restaurants).build();
+	}
+	
+	@POST
+	@Path("/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createOrderRequest(@PathParam("id") long restaurantId, OrderRequest entity) {
+		Restaurant restaurant = restaurantService.find(restaurantId);
+		if(restaurant != null) {
+			entity.setRestaurant(restaurant);
+			orderRequestService.save(entity);
+		}
+		return Response.ok().build();
 	}
 	
 
